@@ -1,0 +1,21 @@
+import { create } from 'zustand';
+import axios from 'axios';
+const API_URL = 'http://localhost:5000/api/auth';
+
+export const useCategoryStore = create((set) => ({
+  categories: [],
+  fetchCategories: async () => {
+    const res = await axios.get(`${API_URL}/categories`);
+    set({ categories: res.data });
+  },
+
+  createCategory:async(name,description)=>{
+    try {
+      const res=await axios.post(`${API_URL}/create-category`,{name,description});
+      console.log("category created",res)
+    } catch (error) {
+      console.error(error)
+    
+  }
+  }
+}));
