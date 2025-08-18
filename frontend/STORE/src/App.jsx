@@ -16,6 +16,9 @@ import ProductsDetails from "./pages/ProductsDetails";
 import Navbar from "./components/navbar";
 import CartPage from "./pages/cartPage";
 import OrderPage from "./pages/orderPage";
+import SearchResultsPage from "./pages/searchResultsPage";
+import CategoriesPage from "./pages/CategoriesPage";
+import AddProductPage from "./pages/AddProductPage";
 
 //protect routes thatrequire authentication
 const ProtectedRoute = ({children}) => {
@@ -51,13 +54,14 @@ function App() {
   useEffect(()=>{
     checkAuth()
   },[checkAuth])
-  if(isCheckingAuth)return <div className="min-h-screen  bg-gradient-to-br from-gray-900 via-blue-900 to-emerald-900 flex items-center justify-center text-gray-500"><Loader className=" size-10 animate-spin "/></div>
+  if(isCheckingAuth)return <div className="min-h-screen  bg-gradient-to-br from-gray-400 via-blue-200 to-gray-400 flex items-center justify-center text-gray-500"><Loader className=" size-10 animate-spin "/></div>
   return (
-    <div className="min-h-screen bg-gradient-to-br
-     from-gray-700 via-gray-400 to-gray-700 
-     flex items-center justify-center relative overflow-hidden "
+  <>
+  <Navbar/>
+    <div className="min-h-screen  bg-gradient-to-br from-gray-900 via-gray-800 to-gray-500 p-8 
+       flex justify-center items-center pt-20  overflow-hidden "
      >
-     <Navbar/>
+     
       <Routes>
         <Route path="/" element={<HomePage/>}/>
         
@@ -67,6 +71,9 @@ function App() {
         <Route path="/forgot-password" element={<RedirectAuthenticatedUser><ForgotPasswordPage/></RedirectAuthenticatedUser>}/>
         <Route path="/reset-password/:token" element={<RedirectAuthenticatedUser><ResetPasswordPage/></RedirectAuthenticatedUser>}/>
         <Route path="/profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>}/>
+        <Route path="/search" element={<SearchResultsPage/>}/>
+        <Route path="/categories" element={<CategoriesPage/>}/>
+        <Route path="/add-Product" element={<ProtectedRoute><AddProductPage/></ProtectedRoute>}/>
         <Route path="/product/:id" element={<ProductsDetails/>}/>
         <Route path="/cart" element={<ProtectedRoute><CartPage/></ProtectedRoute>}/>
         <Route path="/order" element={<ProtectedRoute><OrderPage/></ProtectedRoute>}/>
@@ -74,7 +81,7 @@ function App() {
         <Route path="/cancel" element={<Cancel />} />
       </Routes>
       <Toaster/>
-    </div>
+    </div></>
   )
 }
 

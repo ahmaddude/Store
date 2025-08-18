@@ -42,7 +42,7 @@ Login:async(email,password)=>{
         const response= await axios.post(`${API_URL}/login`,{
             email,password
         });
-        cd({user:response.data.user, isAuthenticated:true, isLoading:false})
+        set({user:response.data.user, isAuthenticated:true, isLoading:false})
     } catch (error) {
         set({error:error.response.data.message||"Error in login", isLoading:false});
         throw error;

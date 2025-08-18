@@ -4,6 +4,7 @@ import bcryptjs from "bcryptjs";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
 import { sendVerificationEmail, sendWelcomeEmail,sendPasswordResetEmail, sendResetSuccessEmail } from "../mailtrap/emails.js";
 import cloudinary from "cloudinary";
+import dotenv from "dotenv";
 
 export const signup=async(req,res)=>{
     const {email,password,name}=req.body;
@@ -183,9 +184,9 @@ export const checkAuth=async(req,res)=>{
 
 export const updateProfile = async(req,res)=>{
     cloudinary.config({ 
-        cloud_name: 'dzycjab1i', 
-        api_key: '626133734785613', 
-        api_secret: 'dR1Ywvmg4kKwgKXZqS0YRuB4Ufw' // Click 'View API Keys' above to copy your API secret
+        cloud_name: process.env.cloud_name,
+        api_key: process.env.api_key, 
+        api_secret: process.env.api_secret 
     });
     try {
         const {profilePic}=req.body;

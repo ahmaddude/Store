@@ -6,6 +6,8 @@ const API_URL = 'http://localhost:5000/api/auth';
 
 export const useProductsStore = create((set) => ({
   allProducts: [],
+  searchResults:[],
+  categoryProducts:[],
   product:null,
   setProducts: (products) =>
     set({ allProducts: products}),
@@ -26,14 +28,14 @@ export const useProductsStore = create((set) => ({
   getCP:async(categoryID)=>{
     const res = await axios.get(`${API_URL}/products`);
 const cres= res.data.products.filter(product=>product.categoryID._id===categoryID)
-set({allProducts:cres})
+set({categoryProducts:cres})
   },
 
   searchProducts: async (searchTerm) => {
     try {
       const res = await axios.get(`${API_URL}/products`);
       const filteredProducts = res.data.products.filter(product =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+        product.name?.toLowerCase().includes(searchTerm?.toLowerCase())
       );
       if(filteredProducts.length===0){
         console.log("No products found");
@@ -41,7 +43,7 @@ set({allProducts:cres})
       }else{
         console.log("Products found");
       
-      set({ allProducts: filteredProducts });}
+      set({ searchResults: filteredProducts });}
     } catch (error) {
       console.error(error);
     }
