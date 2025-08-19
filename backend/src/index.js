@@ -20,13 +20,15 @@ app.use("/api/auth",router)
 const Port=process.env.PORT
 const __dirname=path.resolve();
 
-if(process.env.NODE_ENV === 'production'){
-    app.use(express.static(path.join(__dirname, '../frontend/STORE/dist')));
+if (process.env.NODE_ENV === 'production') {
+    const frontendPath = path.join(__dirname, '../frontend/STORE/dist');
+    app.use(express.static(frontendPath));
 
     app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, '../frontend/STORE','dist', 'index.html'));
-      })
+        res.sendFile(path.join(frontendPath, 'index.html'));
+    });
 }
+
 app.listen(Port,()=>{
     connectdb();
     console.log("Server is running on port 5000");
