@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import SignupPage from "./pages/signupPage";
+import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/loginPage";
 import EmailVerificationPage from "./pages/EmailVerificationPage";
 import { Toaster } from "react-hot-toast";
