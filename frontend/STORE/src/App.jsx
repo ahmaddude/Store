@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import SignupPage from "./pages/SignupPage";
-import LoginPage from "./pages/loginPage";
+import LoginPage from "./pages/LoginPage";
 import EmailVerificationPage from "./pages/EmailVerificationPage";
 import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/authStore";
@@ -14,9 +14,9 @@ import Cancel from "./pages/cancel";
 import HomePage from "./pages/HomePage";
 import ProductsDetails from "./pages/ProductsDetails";
 import Navbar from "./components/navbar";
-import CartPage from "./pages/cartPage";
-import OrderPage from "./pages/orderPage";
-import SearchResultsPage from "./pages/searchResultsPage";
+import CartPage from "./pages/CartPage";
+import OrderPage from "./pages/OrderPage";
+import SearchResultsPage from "./pages/SearchResultsPage";
 import CategoriesPage from "./pages/CategoriesPage";
 import AddProductPage from "./pages/AddProductPage";
 
