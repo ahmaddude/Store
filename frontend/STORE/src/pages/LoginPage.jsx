@@ -7,7 +7,7 @@ import { useAuthStore } from "../store/authStore";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { Login, isLoading, error, isAuthenticated } = useAuthStore();
+  const { Login, isLoading,  isAuthenticated } = useAuthStore();
   const navigate = useNavigate();
 
   useEffect(() => {

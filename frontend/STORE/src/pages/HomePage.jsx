@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useProductsStore } from '../store/productsStore';
 import { Loader } from 'lucide-react';
-import AddProductCard from '../components/addProductCard'
+import AddProductCard from '../components/AddProductCard'
 import FlipCard from '../components/productCard'; 
 import { useNavigate } from 'react-router-dom';
 

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useProductsStore } from "../store/productsStore";
 import { useCategoryStore } from "../store/categoryStore";
 import { Loader } from "lucide-react";
-import { motion } from "framer-motion";
 import FlipCard from "../components/productCard"; // your flipping card
 
 const CategoriesPage = () => {
