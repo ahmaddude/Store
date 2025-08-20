@@ -12,7 +12,7 @@ app.use(express.json())// to parse json data(req.body)
 app.use(cookieParser())// to parse cookies
 
 app.use(cors({
-    origin:process.env.CLIENT_URL,
+   origin: "http://localhost:5173",
     credentials:true,//to allow cookies to be sent with requests
 }));
 
@@ -21,11 +21,10 @@ const Port=process.env.PORT
 const __dirname=path.resolve();
 
 if (process.env.NODE_ENV === 'production') {
-    const frontendPath = path.join(__dirname, '../frontend/STORE/dist');
-    app.use(express.static(frontendPath));
+    app.use(express.static(path.join(__dirname, "../frontend/STORE/dist")));
 
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(frontendPath, 'index.html'));
+    app.get("*", (req, res) => {
+        res.sendFile(path.join("../frotend/STORE","dist", 'index.html'));
     });
 }
 
