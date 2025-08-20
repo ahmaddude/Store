@@ -72,9 +72,9 @@ try {
 },
 
 
-  updateProduct:async(name,price,description,image,stock,categoryID)=>{
+  updateProduct:async(id,name,price,description,image,stock,categoryID)=>{
     try {
-      const res=await axios.put(`${API_URL}/update-product/:id`,{name,price,description,image,stock,categoryID},{withCredentials:true});
+      const res=await axios.put(`${API_URL}/update-product/${id}`,{name,price,description,image,stock,categoryID},{withCredentials:true});
       console.log("product updated",res.data)
     } catch (error) {
       console.error(error);
