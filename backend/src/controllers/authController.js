@@ -4,7 +4,6 @@ import bcryptjs from "bcryptjs";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
 import { sendVerificationEmail, sendWelcomeEmail,sendPasswordResetEmail, sendResetSuccessEmail } from "../mailtrap/emails.js";
 import cloudinary from "cloudinary";
-import dotenv from "dotenv";
 
 export const signup=async(req,res)=>{
     const {email,password,name}=req.body;
