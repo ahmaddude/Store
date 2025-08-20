@@ -4,7 +4,7 @@ import { useCategoryStore } from '../store/categoryStore';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Input from '../components/Input';
-import { Tag, DollarSign, Package, Image, Edit3 } from 'lucide-react';
+import {  DollarSign, Package, Image, Edit3 } from 'lucide-react';
 
 const AddProductPage = () => {
   const navigate = useNavigate();

@@ -31,7 +31,12 @@ export const useCartStore = create((set) => ({
   },
   checkout:async()=>{
     try {
-      const res=await axios.post(`${API_URL}/create-payment`,{withCredentials:true});
+      const res=await axios.post(
+  `${API_URL}/create-payment`,
+  {}, // body (empty if nothing needed)
+  { withCredentials: true } // config
+);
+
       set({url:res.data.url})
       console.log('checkout',res.data);
     } catch (error) {
