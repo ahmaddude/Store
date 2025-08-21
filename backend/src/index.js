@@ -17,7 +17,7 @@ app.use(cookieParser()); // to parse cookies
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://Store.onrender.com"
+    "https://store-3lt8.onrender.com"
   ],
   credentials: true,
 }));
