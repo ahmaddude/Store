@@ -15,10 +15,8 @@ app.use(express.json()); // to parse json data(req.body)
 app.use(cookieParser()); // to parse cookies
 
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://store-3lt8.onrender.com"
-  ],
+  origin: "http://localhost:5173",
+    
   credentials: true,
 }));
 
