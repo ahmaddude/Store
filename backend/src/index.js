@@ -7,10 +7,9 @@ import cors from 'cors';
 import path from 'path';
 
 dotenv.config();
-
+const __dirname = path.resolve(); // Get the current directory name
 const app = express();
 const Port = process.env.PORT || 5000;
-const __dirname = path.resolve();
 
 app.use(express.json()); // to parse json data(req.body)
 app.use(cookieParser()); // to parse cookies
@@ -26,12 +25,13 @@ app.use(cors({
 app.use("/api/auth", router);
 
 // Serve frontend in production
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../frontend/STORE/dist")));
+if(process.env.NODE_ENV==="production"){
+  console.log(`${__dirname}/frontend/dist`)
+  app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend/STORE/dist", "index.html"));
-  });
+  app.get(/^(?!\/api).*/,(req,res)=>{
+    res.sendFile(path.join(__dirname, "/frontend", "dist", "index.html"));
+  })
 }
 
 app.listen(Port, () => {
