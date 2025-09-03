@@ -16,14 +16,14 @@ app.use(express.json());
 app.use(cookieParser());
 
 // CORS configuration for development and production
-const corsOptions = {
-  origin: process.env.NODE_ENV === "production" 
-    ? [process.env.FRONTEND_URL, "https://store-3lt8.onrender.com"] // Replace with your actual Render URL
-    : "http://localhost:5173",
-  credentials: true,
-};
+app.use(cors(
+  { 
+     origin:"http://localhost:5173",
+    credentials:true,
+  }
+    
+))
 
-app.use(cors(corsOptions));
 
 // API routes
 app.use("/api/auth", router);

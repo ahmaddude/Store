@@ -17,7 +17,6 @@ verifyEmail:async(code)=>{
     try {
         const response=await axios.post(`${API_URL}/verify-email`,{code});
         set({user:response.data.user,isAuthenticated:true,isLoading:false});
-        console.log(response.data.user)
         return response.data;
     } catch (error) {
         set({error:error.response.data.message || "Error verifying email",isLoading:false});

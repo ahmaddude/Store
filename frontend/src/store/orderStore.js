@@ -29,7 +29,6 @@ export const useOrderStore = create((set) => ({
     try {
       const res = await axios.get(`${API_URL}/orders`, { withCredentials: true });
       set({ orders: res.data.orders });
-      console.log(res.data.orders);
     } catch (error) {
       console.error("Error fetching orders:", error);
     }
