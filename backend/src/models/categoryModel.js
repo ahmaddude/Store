@@ -9,6 +9,9 @@ const categorySchema = new mongoose.Schema({
         type: String,
         default: "check out my category!"
     },
-    
+    image:{
+        type:String,
+        required:true,
+    }
 });
 export const Category= mongoose.model('Category', categorySchema);

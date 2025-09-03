@@ -92,12 +92,30 @@ checkAuth:async()=>{
         console.log("error in check auth")
     }
 },
-updatedProfile:async(data)=>{
+updatedProfile: async(data) => {
     try {
-        const res=await axios.put(`${API_URL}/updated-profile`,data);
-        set({user:res.data.user});
+        // Validate that at least one field is provided
+        if (!data.profilePic && !data.bio) {
+            throw new Error("At least one field (profilePic or bio) is required");
+        }
+
+        const res = await axios.put(`${API_URL}/updated-profile`, data);
+        
+        // Update the user state with the returned user data
+        set({ user: res.data });
+        
+        return { success: true, user: res.data };
+        
     } catch (error) {
-        console.log("error in update profile",error);
+        console.log("error in update profile", error);
+        
+        // Return error information for better error handling in components
+        const errorMessage = error.response?.data?.message || error.message || "Failed to update profile";
+        
+        return { 
+            success: false, 
+            error: errorMessage 
+        };
     }
 },
 

@@ -95,7 +95,7 @@ const handleSearch = (e) => {
     <div className="w-full">
     <Navbar className="fixed top-0 z-50 w-full rounded-none px-4 py-2 lg:px-8 lg:py-4">
       <div className="flex items-center justify-between">
-        <Typography as="button" onClick={()=>navigate('/')} className="mr-4 cursor-pointer py-1.5 font-medium text-black">
+        <Typography as="button" onClick={()=>navigate('/')} className="mr-4 cursor-pointer py-1.5 font-bold text-2xl text-black">
           Store
         </Typography>
 

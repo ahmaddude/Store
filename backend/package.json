@@ -22,6 +22,7 @@
     "jsonwebtoken": "^9.0.2",
     "mailtrap": "^4.1.0",
     "mongoose": "^8.13.2",
+    "nodemailer": "^6.10.1",
     "store": "file:..",
     "stripe": "^18.1.0"
   },

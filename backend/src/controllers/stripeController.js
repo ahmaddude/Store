@@ -1,5 +1,7 @@
 import Stripe from "stripe";
 import {Cart} from "../models/cartModel.js";
+import dotenv from "dotenv"
+dotenv.config()
 
 const stripe=Stripe(process.env.STRIPE_SK);
 

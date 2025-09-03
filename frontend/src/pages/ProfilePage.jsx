@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useAuthStore } from "../store/authStore";
-import { Camera, Mail, User } from "lucide-react";
+import { Camera, Mail, User, Edit3, Check, X } from "lucide-react";
 
 const ProfilePage = () => {
   const { user, updatedProfile, becomeASeller } = useAuthStore();
   const [selectedImg, setSelectedImg] = useState(null);
+  const [isEditingBio, setIsEditingBio] = useState(false);
+  const [bioText, setBioText] = useState(user?.bio || "");
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
@@ -20,8 +22,20 @@ const ProfilePage = () => {
     };
   };
 
+  const handleBioSave = async () => {
+    const result = await updatedProfile({ bio: bioText });
+    if (result.success) {
+      setIsEditingBio(false);
+    }
+  };
+
+  const handleBioCancel = () => {
+    setBioText(user?.bio || "");
+    setIsEditingBio(false);
+  };
+
   return (
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+      <div className="pb-50 md:max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 ">
         {/* Avatar Section */}
         <div className="flex flex-col items-center space-y-6">
           <div className="relative w-40 h-40">
@@ -77,8 +91,47 @@ const ProfilePage = () => {
 
           {/* Additional Info or Settings */}
           <div className="bg-gray-800 rounded-2xl p-8 shadow-lg space-y-4">
-            <h3 className="text-xl font-semibold text-white">User Bio</h3>
-            <p className="text-gray-300">{user.bio}</p>
+            <div className="flex items-center justify-between">
+              <h3 className="text-xl font-semibold text-white">User Bio</h3>
+              {!isEditingBio && (
+                <button
+                  onClick={() => setIsEditingBio(true)}
+                  className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg transition"
+                >
+                  <Edit3 className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+            
+            {isEditingBio ? (
+              <div className="space-y-3">
+                <textarea
+                  value={bioText}
+                  onChange={(e) => setBioText(e.target.value)}
+                  className="w-full bg-gray-700 text-white p-3 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none resize-none"
+                  rows="4"
+                  placeholder="Tell us about yourself..."
+                />
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleBioSave}
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition"
+                  >
+                    <Check className="w-4 h-4" />
+                    Save
+                  </button>
+                  <button
+                    onClick={handleBioCancel}
+                    className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition"
+                  >
+                    <X className="w-4 h-4" />
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <p className="text-gray-300">{user.bio || "No bio added yet."}</p>
+            )}
           </div>
         </div>
       </div>

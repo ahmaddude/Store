@@ -2,8 +2,8 @@ import { User } from "../models/userModel.js";
 import crypto from "crypto";
 import bcryptjs from "bcryptjs";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
-import { sendVerificationEmail, sendWelcomeEmail,sendPasswordResetEmail, sendResetSuccessEmail } from "../mailtrap/emails.js";
 import cloudinary from "cloudinary";
+import { sendMail } from "../utils/mailer.js";
 
 export const signup=async(req,res)=>{
     const {email,password,name}=req.body;
@@ -27,9 +27,14 @@ export const signup=async(req,res)=>{
         })
         await user.save();
 
+         await sendMail({
+      to: email,
+      subject: "Verify your Store account",
+      text: `Your verification code is ${verificationToken}`,
+      html: `<p>Your verification code is <b>${verificationToken}</b>. It expires in 15 minutes.</p>`,
+    });
         //JWT
         generateTokenAndSetCookie(res,user._id);
-        await sendVerificationEmail(user.email,verificationToken);
 
         res.status(201).json({
             success:true,
@@ -63,7 +68,7 @@ export const verifyEmail=async(req,res)=>{
         await user.save();
 
         
-        await sendWelcomeEmail(user.email,user.name);
+        
 
         res.status(200).json({
             success:true,
@@ -181,29 +186,50 @@ export const checkAuth=async(req,res)=>{
     }
 };
 
-export const updateProfile = async(req,res)=>{
+export const updateProfile = async(req, res) => {
     cloudinary.config({ 
         cloud_name: process.env.cloud_name,
         api_key: process.env.api_key, 
         api_secret: process.env.api_secret 
     });
+    
     try {
-        const {profilePic}=req.body;
-       const userId= req.userId;
+        const { profilePic, bio } = req.body;
+        const userId = req.userId;
 
-       if(!profilePic){
-           return res.status(400).json({message:"Profile pic is required"});
-       }
+        // Check if at least one field is provided
+        if (!profilePic && !bio) {
+            return res.status(400).json({
+                message: "At least one field (profilePic or bio) is required"
+            });
+        }
 
+        // Prepare update object
+        const updateFields = {};
 
-      const uploadResponse= await cloudinary.uploader.upload(profilePic)
-      
-      const updatedUser= await User.findByIdAndUpdate(userId,{profilePic:uploadResponse.secure_url},{new:true})
+        // Handle profile picture upload if provided
+        if (profilePic) {
+            const uploadResponse = await cloudinary.uploader.upload(profilePic);
+            updateFields.profilePic = uploadResponse.secure_url;
+        }
 
-      res.status(200).json(updatedUser)
+        // Handle bio update if provided
+        if (bio) {
+            updateFields.bio = bio;
+        }
+
+        // Update user with the provided fields
+        const updatedUser = await User.findByIdAndUpdate(
+            userId, 
+            updateFields, 
+            { new: true }
+        );
+
+        res.status(200).json(updatedUser);
+        
     } catch (error) {
-        console.log("error in update profile controller",error.message)
-        res.status(500).json({message:"internal server error"});
+        console.log("error in update profile controller", error.message);
+        res.status(500).json({ message: "internal server error" });
     }
 };
 
